@@ -2,8 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { BookingDto } from './../src/bookings/entities/create-booking.dto';
 
-describe('AppController (e2e)', () => {
+describe('BookingController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -15,11 +16,16 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('should create a new valid booking (POST)', async () => {
+    const booking = new BookingDto('Christian', 5, new Date(), '12345678', 
+        'kirs@cphbusiness.dk', 'We are alergic to nuts');
+    
+    const {body} = await request(app.getHttpServer())
+      .post('/bookings')
+      .send(booking)
+      .expect(201)
+      
+      expect(body.name).toEqual('Christian');
   });
 
   afterAll(() => {
