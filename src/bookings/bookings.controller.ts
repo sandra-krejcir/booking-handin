@@ -5,14 +5,14 @@ import { BookingDto } from './entities/booking.dto';
 
 @Controller('bookings')
 export class BookingsController {
-    constructor(private bookingService: BookingsService) {}
+  constructor(private bookingService: BookingsService) {}
 
-    @Get() 
-    getAll(): Promise<Booking[]> {
-        return this.bookingService.findAll();
-    }
-    @Post() 
-    create(@Body() bookingDto: BookingDto) : Promise<Booking> {
-        return this.bookingService.create(bookingDto);
-    }
+  @Get()
+  getAll(): Promise<Booking[]> {
+    return this.bookingService.findAll();
+  }
+  @Post()
+  create(@Body() bookingDto: BookingDto): Promise<Booking> {
+    return this.bookingService.create(bookingDto);
+  }
 }
